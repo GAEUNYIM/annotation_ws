@@ -103,8 +103,12 @@ for file_name in list_images:
         prefix0 = ast.literal_eval(prefix0)
         if prefix0 >= 1560210000 and prefix0 <= 1560330000: # Taegisan
             image_dict[0]['weather'] = 'Sunny'
-        elif prefix0 >= 1560730000 and prefix0 <= 1560840000: # Gyeongju
+        elif prefix0 >= 1560730000 and prefix0 <= 1560760998: # Gyeongju
+            image_dict[0]['weather'] = 'Sunny'
+        elif prefix0 >= 1560818133 and prefix0 <= 1560824365: # Gyeongju
             image_dict[0]['weather'] = 'Cloudy'
+        elif prefix0 >= 1560826336 and prefix0 <= 1560840000: # Gyeongju
+            image_dict[0]['weather'] = 'Sunny'
         elif prefix0 >= 1560990000 and prefix0 <= 1561000000: # Yongdaeri
             image_dict[0]['weather'] = 'Sunny'
         elif prefix0 >= 1561330000 and prefix0 <= 1561450000: # Gimnyeong
@@ -122,27 +126,45 @@ for file_name in list_images:
                 image_dict[0]['weather'] = 'Sunny'
             # elif prefix1[0] == '200130':
             #     image_dict[0]['farm'] = 'Whitecreek'
-            elif prefix1[0] == '200121' or prefix1[0] == '200122': # Gyeongju
+            elif prefix1[0] == '200121': # Gyeongju
                 image_dict[0]['weather'] = 'Sunny'
+            elif prefix1[0] == '200122': # Gyeongju
+                image_dict[0]['weather'] = 'Cloudy'
             elif prefix1[0] == '200620': # Uljin
                 image_dict[0]['weather'] = 'Sunny'
 
         elif len(prefix1) == 2:
             prefix2 = prefix1[1]
             prefix2 = int(prefix2)
-            if prefix2 >= 17634 and prefix2 <= 17736: # Hangwon
+            if prefix2 >= 17634 and prefix2 <= 24564: # Hangwon
                 image_dict[0]['weather'] = 'Sunny'
-            elif prefix2 >= 24409 and prefix2 <= 32433: # Hangwon
+            elif prefix2 <= 32433:
                 image_dict[0]['weather'] = 'Cloudy'
-            elif prefix2 >= 33099 and prefix2 <= 36371: # Yongdaeri
+            elif prefix2 >= 33099 and prefix2 <= 35625: # Yongdaeri
                 image_dict[0]['weather'] = 'Snow'
+            elif prefix2 >= 36009 and prefix2 <= 36371: # Yongdaeri
+                image_dict[0]['weather'] = 'Sunny'
             elif prefix2 == 19064: # Yongdaeri
                 image_dict[0]['weather'] = 'Snow'
 
         elif len(prefix1) == 1:
             prefix2 = int(prefix1[0])
-            if prefix2 >= 55535 and prefix2 <= 67334: # Gyeongju
+            # if prefix2 >= 55535 and prefix2 <= 67334: # Gyeongju
+            if prefix2 >= 55535 and prefix2 <= 56362:
                 image_dict[0]['weather'] = 'Sunny'
+            elif prefix2 <= 56861: 
+                image_dict[0]['weather'] = 'Cloudy'
+            elif prefix2 <= 61748: 
+                image_dict[0]['weather'] = 'Sunny'
+            elif prefix2 <= 64269: 
+                image_dict[0]['weather'] = 'Cloudy'
+            elif prefix2 <= 65231:
+                image_dict[0]['weather'] = 'Sunny'
+            elif prefix2 <= 66354:
+                image_dict[0]['weather'] = 'Cloudy'
+            elif prefix2 <= 67334:
+                image_dict[0]['weather'] = 'Snow'
+
 
     assert len(image_dict[0]) == 5 # Check whether the image has farm information
 

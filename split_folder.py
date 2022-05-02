@@ -21,14 +21,14 @@ annotation file according to the splits.
 
 '''
 
-name_dir = "Hangwon"
+name_dir = "Cloudy"
 
 # Path for images, and annotations 
-path_source = "../../Media/v0/train"
+path_source = "../../Media/v0/valid"
 path_source_images = path_source + "/images" 
 path_source_annotations = path_source + "/annotations"
 
-path_dest = "../../Media/v0/train/per_farm"
+path_dest = "../../Media/v0/valid/per_weather"
 # os.makedirs(path_dest)
 
 path_dest_images = path_dest + "/" + name_dir + "/images"
@@ -40,7 +40,7 @@ os.makedirs(path_dest_annotations)
 
 
 # Step / Open the original json annotations file
-old_ann_filename = 'farm_coco_annotations.json' # TODO;
+old_ann_filename = 'weather_coco_annotations.json' # TODO;
 with open(path_source_annotations + '/' + old_ann_filename, 'r') as jf:
     json_data = json.load(jf)
 # Check : Print out all the keys in json_data (You can easily see the structure of json file)
@@ -106,7 +106,7 @@ for file_name in list_images:
     ann_dicts = coco.loadAnns(ann_ids)
 
 
-    if image_dict[0]['farm'] == name_dir:
+    if image_dict[0]['weather'] == name_dir:
         # Append img information
         new_img_info.append(image_dict[0])
         img_id += 1 

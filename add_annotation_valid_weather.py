@@ -1,7 +1,7 @@
 import os
 import json
 from pycocotools.coco import COCO
-import ast
+
 
 '''
 ################################################
@@ -24,8 +24,8 @@ img_2001.jpg img_4000.jpg are taken from mountain farm.
 
 
 # Path for images, and annotations 
-path_source_images = "../../Media/v0/train/images" 
-path_source_annotations = "../../Media/v0/train/annotations"
+path_source_images = "../../Media/v0/valid/images" 
+path_source_annotations = "../../Media/v0/valid/annotations"
 
 
 
@@ -96,53 +96,14 @@ for file_name in list_images:
     # Get prefix of file_name
     prefix = file_name.split('_')[0]
 
-    image_file_name = file_name.split('.')[:-1]
-    prefix0 = image_file_name[0]
-
-    if len(image_file_name) > 1:
-        prefix0 = ast.literal_eval(prefix0)
-        if prefix0 >= 1560210000 and prefix0 <= 1560330000: # Taegisan
-            image_dict[0]['weather'] = 'Sunny'
-        elif prefix0 >= 1560730000 and prefix0 <= 1560840000: # Gyeongju
-            image_dict[0]['weather'] = 'Cloudy'
-        elif prefix0 >= 1560990000 and prefix0 <= 1561000000: # Yongdaeri
-            image_dict[0]['weather'] = 'Sunny'
-        elif prefix0 >= 1561330000 and prefix0 <= 1561450000: # Gimnyeong
-            image_dict[0]['weather'] = 'Sunny'
-        elif prefix0 >= 1561600000 and prefix0 <= 1561620000: # Hamada
-            image_dict[0]['weather'] = 'Cloudy'
-        elif prefix0 >= 1666290000 and prefix0 <= 1666790000: # Yongdaeri
-            image_dict[0]['weather'] = 'Sunny'
-    else:
-        prefix1 = prefix0.split('_')
-        if len(prefix1) == 3:
-            if prefix1[0] == '191030': # Gagosima
-                image_dict[0]['weather'] = 'Sunny'
-            elif prefix1[0] == '191112': # Tamla
-                image_dict[0]['weather'] = 'Sunny'
-            # elif prefix1[0] == '200130':
-            #     image_dict[0]['farm'] = 'Whitecreek'
-            elif prefix1[0] == '200121' or prefix1[0] == '200122': # Gyeongju
-                image_dict[0]['weather'] = 'Sunny'
-            elif prefix1[0] == '200620': # Uljin
-                image_dict[0]['weather'] = 'Sunny'
-
-        elif len(prefix1) == 2:
-            prefix2 = prefix1[1]
-            prefix2 = int(prefix2)
-            if prefix2 >= 17634 and prefix2 <= 17736: # Hangwon
-                image_dict[0]['weather'] = 'Sunny'
-            elif prefix2 >= 24409 and prefix2 <= 32433: # Hangwon
-                image_dict[0]['weather'] = 'Cloudy'
-            elif prefix2 >= 33099 and prefix2 <= 36371: # Yongdaeri
-                image_dict[0]['weather'] = 'Snow'
-            elif prefix2 == 19064: # Yongdaeri
-                image_dict[0]['weather'] = 'Snow'
-
-        elif len(prefix1) == 1:
-            prefix2 = int(prefix1[0])
-            if prefix2 >= 55535 and prefix2 <= 67334: # Gyeongju
-                image_dict[0]['weather'] = 'Sunny'
+    if prefix == '191228': # Gasiri
+        image_dict[0]['weather'] = 'Cloudy'
+    elif prefix == '200121': # Gyeongju
+        image_dict[0]['weather'] = 'Sunny'
+    elif prefix == '191107': # Siwha
+        image_dict[0]['weather'] = 'Sunny'
+    # elif prefix == '200706':
+    #     image_dict[0]['farm'] = 'Honam'
 
     assert len(image_dict[0]) == 5 # Check whether the image has farm information
 
