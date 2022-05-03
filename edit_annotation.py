@@ -48,7 +48,7 @@ js_dicts_new['annotations'] = []
 # Step / Modify annotation sections
 for dict in js_dicts_annotations:
     # Modify information
-    segmentation = dict["segmentation"][0]
+    segmentation = [dict["segmentation"]]
     dict["segmentation"] = segmentation
     # Append new dictionary
     js_dicts_new['annotations'].append(dict)
