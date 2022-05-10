@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 from pycocotools.coco import COCO
 
 '''
@@ -9,10 +10,18 @@ You can freely select annotations with `list of file names` from original json f
 
 
 # Step / Set paths
+path_source_images = "../../Media/v0/valid/images"
 path_source_annotations = "../../Media/v0/valid/annotations" # TODO;
-path_target_annotations = "../../Media/v0/valid/blade/annotations" # TODO;
-path_target_images = "../../Media/v0/valid/blade/images" # TODO;
 
+path_target_images = "../../Media/v0/valid/per_case/root/images" # TODO;
+
+path_dest = ("../../Media/v0.1/valid/per_case/root")
+path_dest_images = path_dest + "/images"  # TODO;
+path_dest_annotations =  path_dest + "/annotations" # TODO;
+
+os.mkdir(path_dest)
+os.mkdir(path_dest_images)
+os.mkdir(path_dest_annotations)
 
 # Step / Set file names
 old_ann_filename = 'coco_annotations.json' # TODO;
@@ -44,6 +53,11 @@ js_dicts_new['categories'] = js_dicts_categories # Will be maintained
 js_dicts_new['images'] = []
 js_dicts_new['annotations'] = []
 
+cnt_img = 0
+cnt_ann = 0
+new_img_info = []
+new_annot_info = []
+
 
 # Step / Create inversed dictionaries with "image_id"
 ids_dict_with_file_names = {}
@@ -54,30 +68,39 @@ for dict in js_dicts_images:
 
 
 # Step / Returns lists of the file names
-list_images = os.listdir(path_target_images)
-
+target_list_images = os.listdir(path_target_images)
+print("number of target images: ", len(target_list_images))
 
 # Step / Use coco api with old annotation file
 coco = COCO(path_source_annotations + "/" + old_ann_filename)
 
 # Step / Extract the annotations you want
-for file_name in list_images:
+for file_name in target_list_images:
 
+    # Move images into destination path
+    shutil.copy(path_source_images + "/" + file_name, path_dest_images)
+
+    # Extract annotations into new annotation file
     image_id = ids_dict_with_file_names[file_name]
+    img_dict = coco.loadImgs(image_id)
+    assert len(img_dict) == 1
+
+    new_img_info.append(img_dict[0])
+
+
     ann_ids = coco.getAnnIds(imgIds=image_id)
     anns = coco.loadAnns(ann_ids) 
 
-    img_dict = {
-
-    }
-    js_dicts_new['images'].append(img_dict)
-
     # Create new objects that are augmented
     for ann in anns:
-        js_dicts_new['annotations'].append(ann)
+        new_annot_info.append(ann)
+        cnt_ann += 1
 
+js_dicts_new['images'] = new_img_info
+js_dicts_new['annotations'] = new_annot_info
 
+print("number of annotatios: ", cnt_ann)
 
 # Step / Write down a new josn annotations file # TODO;
-with open(path_target_annotations + "/" + new_ann_filename, 'w', encoding='utf-8') as ef:
+with open(path_dest_annotations + "/" + new_ann_filename, 'w', encoding='utf-8') as ef:
     json.dump(js_dicts_new, ef, ensure_ascii=False, indent="\t")
